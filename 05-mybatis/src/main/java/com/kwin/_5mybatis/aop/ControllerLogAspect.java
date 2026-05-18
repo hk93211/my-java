@@ -13,6 +13,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import jakarta.servlet.http.HttpServletRequest; // 注意这里换成了 jakarta
 
+/**
+ * 自动增加所有controller接口入参/出参/请求耗时 切面
+ */
 @Aspect
 @Component
 @Slf4j

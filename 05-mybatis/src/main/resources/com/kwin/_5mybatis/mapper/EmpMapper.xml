@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin._5mybatis.mapper.EmpMapper">
+
+    <select id="page" resultType="com.kwin._5mybatis.pojo.Emp">
+        select * from emp e where 1=1
+        <if test="id != null and id != ''">
+            and e.id = #{id}
+        </if>
+        <if test="ids != null">
+            and e.id in
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="name != null and name != ''">
+            and (e.name like CONCAT('%', #{name}, '%') or (e.job like CONCAT('%', #{name}, '%')))
+        </if>
+        <if test="age != null and age != ''">
+            and e.age like CONCAT('%', #{age}, '%')
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and e.dept_id = #{deptId}
+        </if>
+        <if test="createTimeStart != null">
+            and e.create_time &gt;= #{createTimeStart}
+        </if>
+        <if test="createTimeEnd != null">
+            and e.create_time &lt;= #{createTimeEnd}
+        </if>
+        order by id
+    </select>
+
+    <insert id="insert" parameterType="com.kwin._5mybatis.pojo.Emp">
+        INSERT INTO emp
+        (id, name, age, enterdate, dept_id, manager_id, job, salary, create_time, update_time) VALUES
+        (#{id}, #{name}, #{age}, #{enterdate}, #{deptId}, #{managerId}, #{job}, #{salary}, #{createTime}, #{updateTime})
+
+    </insert>
+</mapper>

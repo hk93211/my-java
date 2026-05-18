@@ -1,13 +1,23 @@
 spring:
   application:
     name: 05-mybatis
+  jackson:
+    # 格式化全局日期
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 关闭“将时间写为时间戳”的特性
+    serialization:
+      write-dates-as-timestamps: false
+    # 设置时区
+    time-zone: GMT+8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: asd123123
+#    url: jdbc:mysql://localhost:3306/test
     username: root
-    password: asd123123
-    url: jdbc:mysql://localhost:3306/test
-  mybatis:
-    mapper-locations: classpath:com.kwin.mapper/*.xml
-    configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-      map-underscore-to-camel-case: true
+    password: QuecTel!123
+    url: jdbc:mysql://192.168.10.28:3306/quectel_pms_product_bak?useSSL=false
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
