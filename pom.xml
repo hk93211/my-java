@@ -16,6 +16,7 @@
         <module>02-ali-oss</module>
         <module>03-ali-oss-x-file-storage</module>
         <module>04-spring-IoC</module>
+        <module>05-mybatis</module>
     </modules>
 
     <properties>
