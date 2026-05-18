@@ -37,6 +37,20 @@
         INSERT INTO emp
         (id, name, age, enterdate, dept_id, manager_id, job, salary, create_time, update_time) VALUES
         (#{id}, #{name}, #{age}, #{enterdate}, #{deptId}, #{managerId}, #{job}, #{salary}, #{createTime}, #{updateTime})
-
     </insert>
+
+    <insert id="addBatch" parameterType="com.kwin._5mybatis.pojo.Emp">
+        INSERT INTO emp
+        (id, name, age, enterdate, dept_id, manager_id, job, salary, create_time, update_time) VALUES
+        <foreach collection="empList" item="e" separator=",">
+            (#{e.id}, #{e.name}, #{e.age}, #{e.enterdate}, #{e.deptId}, #{e.managerId}, #{e.job}, #{e.salary}, #{e.createTime}, #{e.updateTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteBatch">
+        DELETE FROM emp WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

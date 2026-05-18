@@ -43,7 +43,7 @@ public class AutoFillAndUpdateTimeAspect {
         Object entity = args[0];
         System.out.println(entity);
         LocalDateTime now = LocalDateTime.now();
-//        Long currentId = BaseContext.getCurrentId(); // 获取当前操作人的id
+        // Long currentId = BaseContext.getCurrentId(); // 获取当前操作人的id
 
         if (operationType == OperationType.INSERT) {
             Method setCreateTime = entity.getClass().getDeclaredMethod("setCreateTime", LocalDateTime.class);

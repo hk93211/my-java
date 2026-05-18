@@ -41,4 +41,24 @@ public class EmpController {
         empService.addBatch(empList);
         return Result.success("添加成功");
     }
+
+    @DeleteMapping("delete/{id}")
+    public Result delete(@PathVariable("id") String id) {
+        empService.delete(id);
+        return Result.success("删除成功");
+    }
+
+    @PostMapping("delete")
+    public Result delete(@RequestBody Emp emp) {
+        String id = emp.getId();
+        empService.delete(id);
+        return Result.success("删除成功");
+    }
+
+    @PostMapping("deleteBatch")
+    public Result deleteBatch(@RequestBody List<String> ids) {
+        System.out.println(ids);
+        String s = empService.deleteBatch(ids);
+        return Result.success(s);
+    }
 }
