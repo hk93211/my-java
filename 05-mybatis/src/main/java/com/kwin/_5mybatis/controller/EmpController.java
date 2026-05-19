@@ -36,29 +36,40 @@ public class EmpController {
     }
 
 
-    @PostMapping("addBatch")
+    @PostMapping("/addBatch")
     public Result addBatch(@RequestBody List<Emp> empList) {
         empService.addBatch(empList);
         return Result.success("添加成功");
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable("id") String id) {
         empService.delete(id);
         return Result.success("删除成功");
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public Result delete(@RequestBody Emp emp) {
         String id = emp.getId();
         empService.delete(id);
         return Result.success("删除成功");
     }
 
-    @PostMapping("deleteBatch")
+    @PostMapping("/deleteBatch")
     public Result deleteBatch(@RequestBody List<String> ids) {
-        System.out.println(ids);
         String s = empService.deleteBatch(ids);
         return Result.success(s);
+    }
+
+    @PostMapping("/edit")
+    public Result edit(@RequestBody Emp emp) {
+        empService.edit(emp);
+        return Result.success("编辑成功");
+    }
+
+    @GetMapping("/dept")
+    public Result dept(@RequestParam("id") String id) {
+        System.out.println(id);
+        return Result.success(empService.getDeptAndEmps(id));
     }
 }

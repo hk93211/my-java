@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.kwin._5mybatis.annotation.AutoFill;
 import com.kwin._5mybatis.annotation.OperationType;
 import com.kwin._5mybatis.pojo.Emp;
+import com.kwin._5mybatis.pojo.EmpExpr;
 import com.kwin._5mybatis.pojo.EmpPageDTO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,11 +18,13 @@ public interface EmpMapper {
     @Select("select * from emp")
     List<Emp> selectAll();
 
+    List<EmpExpr> selectExprListByEmpIds(@Param("ids") List<String> ids);
+
     Page<Emp> page(EmpPageDTO empPageDTO);
 
     // @AutoFill(value = OperationType.INSERT)
     // 因为ai说不要切面dao层，应该切面service层
-    int insert(Emp emp);
+    int add(Emp emp);
 
     void addBatch(@Param("empList") List<Emp> empList);
 
@@ -29,4 +32,10 @@ public interface EmpMapper {
     int delete(String id);
 
     int deleteBatch(@Param("ids") List<String> ids);
+
+    void edit(Emp emp);
+
+    Object getDeptAndEmps(String id);
+
+    void addExprBatch(@Param("exprList") List<EmpExpr> exprList);
 }

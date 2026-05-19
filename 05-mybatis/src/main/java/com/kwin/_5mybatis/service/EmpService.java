@@ -1,6 +1,7 @@
 package com.kwin._5mybatis.service;
 
 import com.kwin._5mybatis.pojo.Emp;
+import com.kwin._5mybatis.pojo.EmpExpr;
 import com.kwin._5mybatis.pojo.EmpPageDTO;
 import com.kwin._5mybatis.pojo.PageResult;
 
@@ -15,7 +16,13 @@ public interface EmpService {
 
     void addBatch(List<Emp> empList);
 
+    void addEmpExprBatch(List<EmpExpr> exprList);
+
     void delete(String id);
 
     String deleteBatch(List<String> ids);
+
+    void edit(Emp emp);
+
+    Object getDeptAndEmps(String id);
 }
