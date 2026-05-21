@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: 06-mybatisplus
+  jackson:
+    # ???????
+    date-format: yyyy-MM-dd HH:mm:ss
+    # ???????????????
+    serialization:
+      write-dates-as-timestamps: false
+    # ????
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    username: root
+    #    password: asd123123
+    #    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: QuecTel!123
+    url: jdbc:mysql://192.168.10.28:3306/quectel_pms_product_bak?useSSL=false
+mybatis-plus:
+  # ?? MyBatis ????????
+  type-aliases-package: com.kwin.spb.pojo
+  mapper-locations: "classpath*:/mapper/**/*.xml"
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    db-config:
+      id-type: assign_id
+      update-strategy: not_null

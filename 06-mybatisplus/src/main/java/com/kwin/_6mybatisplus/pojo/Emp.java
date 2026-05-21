@@ -1,5 +1,6 @@
-package com.kwin._5mybatis.pojo;
+package com.kwin._6mybatisplus.pojo;
 
+import com.kwin._6mybatisplus.pojo.EmpExpr;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

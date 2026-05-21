@@ -1,19 +1,18 @@
-package com.kwin._5mybatis.aop;
+package com.kwin._6mybatisplus.aop;
 
 
+import com.kwin._6mybatisplus.annotation.AutoFill;
+import com.kwin._6mybatisplus.annotation.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import com.kwin._5mybatis.annotation.AutoFill;
-import com.kwin._5mybatis.annotation.OperationType;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -23,7 +22,7 @@ public class AutoFillAndUpdateTimeAspect {
     /**
      * 切入点
      */
-    @Pointcut("execution(* com.kwin._5mybatis.mapper.*.*(..)) && @annotation(com.kwin._5mybatis.annotation.AutoFill)")
+    @Pointcut("execution(* com.kwin._6mybatisplus.mapper.*.*(..)) && @annotation(com.kwin._6mybatisplus.annotation.AutoFill)")
     public void autoFillPointCut() {}
 
     /**

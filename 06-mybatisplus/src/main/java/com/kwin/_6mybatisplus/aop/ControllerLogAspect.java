@@ -1,7 +1,8 @@
-package com.kwin._5mybatis.aop;
+package com.kwin._6mybatisplus.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import jakarta.servlet.http.HttpServletRequest; // 注意这里换成了 jakarta
 
 /**
  * 自动增加所有controller接口入参/出参/请求耗时 切面
@@ -24,7 +23,7 @@ public class ControllerLogAspect {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Around("execution(public * com.kwin._5mybatis..controller..*.*(..))")
+    @Around("execution(public * com.kwin._6mybatisplus..controller..*.*(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
 

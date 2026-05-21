@@ -1,12 +1,10 @@
-package com.kwin._5mybatis.service.impl;
+package com.kwin._6mybatisplus.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.kwin._5mybatis.mapper.EmpMapper;
-import com.kwin._5mybatis.pojo.*;
-import com.kwin._5mybatis.service.EmpService;
+import com.kwin._6mybatisplus.mapper.EmpMapper;
+import com.kwin._6mybatisplus.pojo.*;
+import com.kwin._6mybatisplus.service.EmpService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class EmpServiceImpl implements EmpService {
@@ -46,14 +43,15 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public PageResult page(EmpPageDTO empPageDTO) {
-        PageHelper.startPage(
-                empPageDTO.getPageNumber(),
-                empPageDTO.getPageSize()
-        );
-
-        Page<Emp> page = empMapper.page(empPageDTO);
-        PageResult pageResult = new PageResult(page);
-        return pageResult;
+        // PageHelper.startPage(
+        //         empPageDTO.getPageNumber(),
+        //         empPageDTO.getPageSize()
+        // );
+        //
+        // Page<Emp> page = empMapper.page(empPageDTO);
+        // PageResult pageResult = new PageResult(page);
+        // return pageResult;
+        return null;
     }
 
     @Override

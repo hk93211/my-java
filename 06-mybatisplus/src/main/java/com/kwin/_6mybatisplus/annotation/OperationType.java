@@ -1,4 +1,4 @@
-package com.kwin._5mybatis.annotation;
+package com.kwin._6mybatisplus.annotation;
 
 public enum OperationType {
     UPDATE,

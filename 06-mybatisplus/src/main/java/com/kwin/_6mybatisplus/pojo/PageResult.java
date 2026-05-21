@@ -1,6 +1,6 @@
-package com.kwin._5mybatis.pojo;
+package com.kwin._6mybatisplus.pojo;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,17 +12,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageResult implements Serializable {
-    private int current;
-    private int size;
-    private int pages;
+    private long current;
+    private long size;
+    private long pages;
     private long total;
     private List records;
 
     public PageResult(Page page) {
-        this.current = page.getPageNum();
-        this.size = page.getPageSize();
+        this.current = page.getCurrent();
+        this.size = page.getSize();
         this.pages = page.getPages();
         this.total = page.getTotal();
-        this.records = page.getResult();
+        this.records = page.getRecords();
     }
 }

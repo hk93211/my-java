@@ -1,11 +1,9 @@
-package com.kwin._5mybatis.mapper;
+package com.kwin._6mybatisplus.mapper;
 
-import com.github.pagehelper.Page;
-import com.kwin._5mybatis.annotation.AutoFill;
-import com.kwin._5mybatis.annotation.OperationType;
-import com.kwin._5mybatis.pojo.Emp;
-import com.kwin._5mybatis.pojo.EmpExpr;
-import com.kwin._5mybatis.pojo.EmpPageDTO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kwin._6mybatisplus.pojo.Emp;
+import com.kwin._6mybatisplus.pojo.EmpExpr;
+import com.kwin._6mybatisplus.pojo.EmpPageDTO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -1,9 +1,9 @@
-package com.kwin._5mybatis.service;
+package com.kwin._6mybatisplus.service;
 
-import com.kwin._5mybatis.pojo.Emp;
-import com.kwin._5mybatis.pojo.EmpExpr;
-import com.kwin._5mybatis.pojo.EmpPageDTO;
-import com.kwin._5mybatis.pojo.PageResult;
+import com.kwin._6mybatisplus.pojo.Emp;
+import com.kwin._6mybatisplus.pojo.EmpExpr;
+import com.kwin._6mybatisplus.pojo.EmpPageDTO;
+import com.kwin._6mybatisplus.pojo.PageResult;
 
 import java.util.List;
 

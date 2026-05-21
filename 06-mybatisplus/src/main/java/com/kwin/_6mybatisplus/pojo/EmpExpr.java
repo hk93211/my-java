@@ -1,10 +1,8 @@
-package com.kwin._5mybatis.pojo;
+package com.kwin._6mybatisplus.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor

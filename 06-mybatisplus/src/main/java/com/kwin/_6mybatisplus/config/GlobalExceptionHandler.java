@@ -1,7 +1,7 @@
-package com.kwin._5mybatis.config;
+package com.kwin._6mybatisplus.config;
 
-import com.kwin._5mybatis.pojo.BusinessException;
-import com.kwin._5mybatis.pojo.Result;
+import com.kwin._6mybatisplus.pojo.BusinessException;
+import com.kwin._6mybatisplus.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

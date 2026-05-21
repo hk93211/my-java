@@ -1,9 +1,9 @@
-package com.kwin._5mybatis.controller;
+package com.kwin._6mybatisplus.controller;
 
-import com.kwin._5mybatis.pojo.Emp;
-import com.kwin._5mybatis.pojo.EmpPageDTO;
-import com.kwin._5mybatis.pojo.Result;
-import com.kwin._5mybatis.service.EmpService;
+import com.kwin._6mybatisplus.pojo.Emp;
+import com.kwin._6mybatisplus.pojo.EmpPageDTO;
+import com.kwin._6mybatisplus.pojo.Result;
+import com.kwin._6mybatisplus.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

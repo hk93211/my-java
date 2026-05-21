@@ -1,4 +1,4 @@
-package com.kwin._5mybatis.aop;
+package com.kwin._6mybatisplus.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class RecordTimeAspect {
-    @Around("execution(* com.kwin._5mybatis.service.impl.*.*(..))")
+    @Around("execution(* com.kwin._6mybatisplus.service.impl.*.*(..))")
     public Object recordTime(ProceedingJoinPoint pjp) throws Throwable {
         long beginTime = System.currentTimeMillis();
 
