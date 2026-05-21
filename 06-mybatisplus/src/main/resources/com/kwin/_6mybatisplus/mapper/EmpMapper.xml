@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kwin._5mybatis.mapper.EmpMapper">
+    <insert id="add" parameterType="com.kwin._5mybatis.pojo.Emp">
+        INSERT INTO emp
+        (id, name, age, enterdate, dept_id, manager_id, job, salary, create_time, update_time) VALUES
+        (#{id}, #{name}, #{age}, #{enterdate}, #{deptId}, #{managerId}, #{job}, #{salary}, #{createTime}, #{updateTime})
+    </insert>
+
+    <insert id="addBatch" parameterType="com.kwin._5mybatis.pojo.Emp">
+        INSERT INTO emp
+        (id, name, age, enterdate, dept_id, manager_id, job, salary, create_time, update_time) VALUES
+        <foreach collection="empList" item="e" separator=",">
+            (#{e.id}, #{e.name}, #{e.age}, #{e.enterdate}, #{e.deptId}, #{e.managerId}, #{e.job}, #{e.salary}, #{e.createTime}, #{e.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="addExprBatch">
+        INSERT INTO emp_expr
+        (id, company, emp_id) VALUES
+        <foreach collection="exprList" item="e" separator=",">
+            (#{e.id}, #{e.company}, #{e.empId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteBatch">
+        DELETE FROM emp WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="edit">
+        update emp
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="enterdate != null">
+                enterdate = #{enterdate},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="managerId != null">
+                manager_id = #{managerId},
+            </if>
+            <if test="job != null">
+                job = #{job},
+            </if>
+            <if test="salary != null">
+                salary = #{salary},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="page" resultType="com.kwin._5mybatis.pojo.Emp">
+        select * from emp e where 1=1
+        <if test="id != null and id != ''">
+            and e.id = #{id}
+        </if>
+        <if test="ids != null">
+            and e.id in
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <if test="name != null and name != ''">
+            and (e.name like CONCAT('%', #{name}, '%') or (e.job like CONCAT('%', #{name}, '%')))
+        </if>
+        <if test="age != null and age != ''">
+            and e.age like CONCAT('%', #{age}, '%')
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and e.dept_id = #{deptId}
+        </if>
+        <if test="createTimeStart != null">
+            and e.create_time &gt;= #{createTimeStart}
+        </if>
+        <if test="createTimeEnd != null">
+            and e.create_time &lt;= #{createTimeEnd}
+        </if>
+        order by id
+    </select>
+
+    <select id="selectExprListByEmpIds" resultType="com.kwin._5mybatis.pojo.EmpExpr">
+        select * from emp_expr where emp_id in
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <resultMap id="DeptWithEmpMap" type="com.kwin._5mybatis.pojo.Dept">
+        <id column="did" property="id"></id>
+        <result column="dname" property="name"></result>
+        <collection property="empList" ofType="com.kwin._5mybatis.pojo.Emp">
+            <id column="eid" property="id"></id>
+            <result column="ename" property="name"></result>
+            <result column="age" property="age"></result>
+            <result column="enterdate" property="enterdate"></result>
+            <result column="dept_id" property="deptId"></result>
+            <result column="manager_id" property="managerId"></result>
+            <result column="job" property="job"></result>
+            <result column="salary" property="salary"></result>
+            <result column="create_time" property="createTime"></result>
+            <result column="update_time" property="updateTime"></result>
+
+            <collection property="empExprList" ofType="com.kwin._5mybatis.pojo.EmpExpr">
+                <id column="eeid" property="id"></id>
+                <result column="company" property="company"></result>
+                <result column="emp_id" property="empId"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getDeptAndEmps" resultMap="DeptWithEmpMap">
+        select
+            d.id did, d.name dname,
+            e.id eid, e.name ename, e.age, e.enterdate, e.dept_id, e.manager_id, e.job, e.salary, e.create_time, e.update_time,
+            ee.id eeid, ee.company, ee.emp_id
+            from dept d
+            left join emp e on d.id = e.dept_id
+            left join emp_expr ee on e.id = ee.emp_id
+            where d.id = #{id}
+    </select>
+</mapper>
