@@ -2,8 +2,12 @@ package com.kwin._6mybatisplus.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kwin._6mybatisplus.mapper.EmpMapper;
 import com.kwin._6mybatisplus.pojo.*;
+import com.kwin._6mybatisplus.service.EmpExprService;
 import com.kwin._6mybatisplus.service.EmpService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,22 +20,31 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class EmpServiceImpl implements EmpService {
+public class EmpServiceImpl
+        extends ServiceImpl<EmpMapper, Emp>
+        implements EmpService {
     final EmpMapper empMapper;
+    final EmpExprService empExprService;
 
-    public EmpServiceImpl(EmpMapper empMapper) {
+    public EmpServiceImpl(
+            EmpMapper empMapper,
+            EmpExprService empExprService
+    ) {
         this.empMapper = empMapper;
+        this.empExprService = empExprService;
     }
 
     @Override
     public List<Emp> selectAll() {
-        List<Emp> empList = empMapper.selectAll();
+        List<Emp> empList = this.list();
         List<String> empIdList = empList.stream()
                 .map(Emp::getId)
                 .distinct()
                 .collect(Collectors.toList());
-        List<EmpExpr> empExprList = empMapper.selectExprListByEmpIds(empIdList);
 
+        LambdaQueryWrapper<EmpExpr> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(EmpExpr::getEmpId, empIdList);
+        List<EmpExpr> empExprList = empExprService.list(wrapper);
         Map<String, List<EmpExpr>> map = empExprList.stream()
                 .collect(Collectors.groupingBy(EmpExpr::getEmpId));
         for (Emp emp : empList) {
@@ -51,7 +64,72 @@ public class EmpServiceImpl implements EmpService {
         // Page<Emp> page = empMapper.page(empPageDTO);
         // PageResult pageResult = new PageResult(page);
         // return pageResult;
-        return null;
+        Page<Emp> page = new Page<>(
+                empPageDTO.getPageNumber(),
+                empPageDTO.getPageSize()
+        );
+
+        LambdaQueryWrapper<Emp> wrapper = new LambdaQueryWrapper();
+
+        // id
+        wrapper.eq(
+                StrUtil.isNotBlank(empPageDTO.getId()),
+                Emp::getId,
+                empPageDTO.getId()
+        );
+
+        // ids in
+        wrapper.in(
+                CollUtil.isNotEmpty(empPageDTO.getIds()),
+                Emp::getId,
+                empPageDTO.getIds()
+        );
+
+        // name/job 模糊
+        wrapper.like(
+                StrUtil.isNotBlank(empPageDTO.getName()),
+                Emp::getName,
+                empPageDTO.getName()
+        );
+
+        // age
+        wrapper.like(
+                empPageDTO.getAge() != 0,
+                Emp::getAge,
+                empPageDTO.getAge()
+        );
+
+        // deptId
+        wrapper.eq(
+                empPageDTO.getDeptId() != 0,
+                Emp::getDeptId,
+                empPageDTO.getDeptId()
+        );
+
+        // createTimeStart
+        wrapper.like(
+                empPageDTO.getCreateTimeStart() != null,
+                Emp::getCreateTime,
+                empPageDTO.getCreateTimeStart()
+        );
+
+        // createTimeEnd
+        wrapper.le(
+                empPageDTO.getCreateTimeEnd() != null,
+                Emp::getCreateTime,
+                empPageDTO.getCreateTimeEnd()
+        );
+
+        // 排序
+        wrapper.orderByAsc(Emp::getId);
+
+        Page<Emp> empPage = this.page(page, wrapper);
+        PageResult pageResult = new PageResult(empPage);
+        return pageResult;
+        // return new PageResult(
+        //         empPage.getTotal(),
+        //         empPage.getRecords()
+        // );
     }
 
     @Override

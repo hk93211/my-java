@@ -1,5 +1,6 @@
 package com.kwin._6mybatisplus.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.kwin._6mybatisplus.pojo.EmpExpr;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Emp {
     private int salary;
     private LocalDate enterdate;
 
+    @TableField(exist = false)
     private List<EmpExpr> empExprList;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
