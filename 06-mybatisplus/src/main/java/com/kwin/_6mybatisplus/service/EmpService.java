@@ -17,8 +17,6 @@ public interface EmpService extends IService<Emp> {
 
     void addBatch(List<Emp> empList);
 
-    void addEmpExprBatch(List<EmpExpr> exprList);
-
     void delete(String id);
 
     String deleteBatch(List<String> ids);

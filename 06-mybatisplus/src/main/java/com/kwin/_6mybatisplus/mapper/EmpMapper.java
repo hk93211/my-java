@@ -15,24 +15,7 @@ import java.util.List;
 @Mapper
 public interface EmpMapper extends BaseMapper<Emp> {
 
-    List<EmpExpr> selectExprListByEmpIds(@Param("ids") List<String> ids);
-
-    Page<Emp> page(EmpPageDTO empPageDTO);
-
-    // @AutoFill(value = OperationType.INSERT)
-    // 因为ai说不要切面dao层，应该切面service层
-    int add(Emp emp);
-
-    void addBatch(@Param("empList") List<Emp> empList);
-
-    @Delete("delete from emp where id = #{id}")
-    int delete(String id);
-
-    int deleteBatch(@Param("ids") List<String> ids);
-
     void edit(Emp emp);
 
     Object getDeptAndEmps(String id);
-
-    void addExprBatch(@Param("exprList") List<EmpExpr> exprList);
 }

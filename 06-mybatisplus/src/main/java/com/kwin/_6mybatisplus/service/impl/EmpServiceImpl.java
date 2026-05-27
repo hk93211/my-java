@@ -56,20 +56,12 @@ public class EmpServiceImpl
 
     @Override
     public PageResult page(EmpPageDTO empPageDTO) {
-        // PageHelper.startPage(
-        //         empPageDTO.getPageNumber(),
-        //         empPageDTO.getPageSize()
-        // );
-        //
-        // Page<Emp> page = empMapper.page(empPageDTO);
-        // PageResult pageResult = new PageResult(page);
-        // return pageResult;
         Page<Emp> page = new Page<>(
                 empPageDTO.getPageNumber(),
                 empPageDTO.getPageSize()
         );
 
-        LambdaQueryWrapper<Emp> wrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<Emp> wrapper = new LambdaQueryWrapper<>();
 
         // id
         wrapper.eq(
@@ -124,12 +116,7 @@ public class EmpServiceImpl
         wrapper.orderByAsc(Emp::getId);
 
         Page<Emp> empPage = this.page(page, wrapper);
-        PageResult pageResult = new PageResult(empPage);
-        return pageResult;
-        // return new PageResult(
-        //         empPage.getTotal(),
-        //         empPage.getRecords()
-        // );
+        return new PageResult(empPage);
     }
 
     @Override
@@ -137,18 +124,17 @@ public class EmpServiceImpl
     public String add(Emp emp) {
         validate(emp);
         String id = fillField(emp);
-        empMapper.add(emp);
+
+        this.save(emp);
         List<EmpExpr> empExprList = emp.getEmpExprList();
-        System.out.println(CollUtil.isNotEmpty(empExprList));
         if (CollUtil.isNotEmpty(empExprList)) {
             for (EmpExpr empExpr : empExprList) {
                 String exprId = UUID.randomUUID().toString();
                 empExpr.setId(exprId);
                 empExpr.setEmpId(id);
             }
-            this.addEmpExprBatch(empExprList);
         }
-
+        empExprService.saveBatch(empExprList);
         return id;
     }
 
@@ -169,29 +155,31 @@ public class EmpServiceImpl
             }
         }
 
-        empMapper.addBatch(empList);
-        empMapper.addExprBatch(empExprs);
-    }
-
-    @Override
-    public void addEmpExprBatch(List<EmpExpr> exprList) {
-        empMapper.addExprBatch(exprList);
+        this.saveBatch(empList);
+        empExprService.saveBatch(empExprs);
     }
 
     @Override
     public void delete(String id) {
-        int rows = empMapper.delete(id);
-        if (rows == 0) {
+        boolean b = this.removeById(id);
+        if (!b) {
             throw new BusinessException("数据不存在");
         }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String deleteBatch(List<String> ids) {
+        LambdaQueryWrapper<EmpExpr> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(EmpExpr::getEmpId, ids);
+
+        empExprService.remove(wrapper);
+
+        // boolean b = this.removeByIds(ids); // service只返回true/false, mapper能返回影响行数
+        int i = empMapper.deleteByIds(ids);
         int total = ids.size();
 
-        int rows = empMapper.deleteBatch(ids);
-        return "成功" + rows + "行, " + "失败" + (total - rows) + "行.";
+        return "成功" + i + "行, " + "失败" + (total - i) + "行.";
     }
 
     @Override
@@ -200,6 +188,7 @@ public class EmpServiceImpl
             throw new BusinessException("未传入id");
         }
         emp.setUpdateTime(LocalDateTime.now());
+        this.updateById(emp);
         empMapper.edit(emp);
     }
 
