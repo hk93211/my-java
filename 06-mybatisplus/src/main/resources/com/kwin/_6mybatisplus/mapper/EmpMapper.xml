@@ -4,37 +4,6 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kwin._6mybatisplus.mapper.EmpMapper">
 
-    <update id="edit">
-        update emp
-        <set>
-            <if test="name != null">
-                name = #{name},
-            </if>
-            <if test="age != null">
-                age = #{age},
-            </if>
-            <if test="enterdate != null">
-                enterdate = #{enterdate},
-            </if>
-            <if test="deptId != null">
-                dept_id = #{deptId},
-            </if>
-            <if test="managerId != null">
-                manager_id = #{managerId},
-            </if>
-            <if test="job != null">
-                job = #{job},
-            </if>
-            <if test="salary != null">
-                salary = #{salary},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-        </set>
-        where id = #{id}
-    </update>
-
     <resultMap id="DeptWithEmpMap" type="com.kwin._6mybatisplus.pojo.Dept">
         <id column="did" property="id"></id>
         <result column="dname" property="name"></result>

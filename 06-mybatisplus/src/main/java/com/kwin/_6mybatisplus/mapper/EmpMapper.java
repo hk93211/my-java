@@ -15,7 +15,5 @@ import java.util.List;
 @Mapper
 public interface EmpMapper extends BaseMapper<Emp> {
 
-    void edit(Emp emp);
-
     Object getDeptAndEmps(String id);
 }

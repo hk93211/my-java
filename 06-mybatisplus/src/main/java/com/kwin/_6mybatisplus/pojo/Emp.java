@@ -16,11 +16,11 @@ import java.util.List;
 public class Emp {
     private String id;
     private String name;
-    private int age;
+    private Integer age;
     private String job;
-    private int managerId;
-    private int deptId;
-    private int salary;
+    private Integer managerId;
+    private Integer deptId;
+    private Integer salary;
     private LocalDate enterdate;
 
     @TableField(exist = false)

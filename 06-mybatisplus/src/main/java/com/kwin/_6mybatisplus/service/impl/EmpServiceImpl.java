@@ -99,7 +99,7 @@ public class EmpServiceImpl
         );
 
         // createTimeStart
-        wrapper.like(
+        wrapper.ge(
                 empPageDTO.getCreateTimeStart() != null,
                 Emp::getCreateTime,
                 empPageDTO.getCreateTimeStart()
@@ -189,7 +189,7 @@ public class EmpServiceImpl
         }
         emp.setUpdateTime(LocalDateTime.now());
         this.updateById(emp);
-        empMapper.edit(emp);
+        // empMapper.edit(emp);
     }
 
     @Override
